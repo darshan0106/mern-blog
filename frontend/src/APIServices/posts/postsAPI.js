@@ -25,14 +25,18 @@ export const updatePostAPI = async (postData) => {
 };
 
 //! Fetch all posts
-export const fetchAllPosts = async () => {
-  const posts = await axios.get(BASE_URL);
+export const fetchAllPosts = async (filters) => {
+  const posts = await axios.get(BASE_URL, {
+    params: filters,
+  });
   return posts.data;
 };
 
 //! Fetch  post
 export const fetchPost = async (postId) => {
-  const posts = await axios.get(`${BASE_URL}/${postId}`);
+  const posts = await axios.get(`${BASE_URL}/${postId}`, {
+    withCredentials: true,
+  });
   return posts.data;
 };
 
@@ -42,4 +46,27 @@ export const deletePostAPI = async (postId) => {
     withCredentials: true,
   });
   return posts.data;
+};
+
+//!like post api
+export const likePostAPI = async (postId) => {
+  const response = await axios.put(
+    `${BASE_URL}/likes/${postId}`,
+    {},
+    {
+      withCredentials: true,
+    }
+  );
+  return response.data;
+};
+//!dislike post api
+export const dislikePostAPI = async (postId) => {
+  const response = await axios.put(
+    `${BASE_URL}/dislikes/${postId}`,
+    {},
+    {
+      withCredentials: true,
+    }
+  );
+  return response.data;
 };

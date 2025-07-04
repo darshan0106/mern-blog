@@ -1,5 +1,4 @@
 const asyncHandler = require("express-async-handler");
-const Post = require("../../models/Post/Post");
 const Category = require("../../models/Category/Category");
 
 const categoryController = {
@@ -51,9 +50,8 @@ const categoryController = {
   }),
   //* ---Update category---
   updateCategory: asyncHandler(async (req, res) => {
-    const categoryId = req.params.categorytId;
+    const categoryId = req.params.categoryId;
     // find the category
-    console.log(categoryId);
     const categoryFound = await Category.findById(categoryId);
     if (!categoryFound) {
       throw new Error("Category not found");

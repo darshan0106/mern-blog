@@ -1,3 +1,4 @@
+import { useMutation, useQuery } from "@tanstack/react-query";
 import React from "react";
 import {
   FaEye,
@@ -6,52 +7,67 @@ import {
   FaThumbsUp,
   FaThumbsDown,
   FaFlag,
+  FaCommentDots,
 } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import {
+  sendEmailVerificatonTokenAPI,
+  userProfileAPI,
+} from "../../APIServices/users/usersAPI";
+import AlertMessage from "../Alert/AlertMessage";
+import { getMyEarningsAPI } from "../../APIServices/earnings/earningsAPI";
 
-const AccountSummaryDashboard = ({}) => {
+const AccountSummaryDashboard = () => {
+  const { data, isLoading, isError, error } = useQuery({
+    queryKey: ["profile"],
+    queryFn: userProfileAPI,
+  });
   //check if user has email
 
-  const hasEmail = false;
-
+  const hasEmail = data?.user?.email;
+  console.log(data);
   //check if user has plan
 
-  const hasPlan = false;
+  const hasPlan = data?.user?.hasSelectedPlan;
 
   //check if user has verified account
-  const isEmailVerified = false;
+  const isEmailVerified = data?.user?.isEmailVerified;
 
   //total followers
-  const totalFollowers = 0;
+  const totalFollowers = data?.user?.followers?.length;
 
   //total following
-  const totalFollowing = 10;
+  const totalFollowing = data?.user?.following?.length;
 
   //get user posts
 
-  const userPosts = 0;
+  const userPosts = data?.user?.posts?.length;
 
   //there is a view count in the post object so calculate the total views
 
-  const totalViews = 0;
+  //initial counters
+  let totalViews = 0;
+  let totalLikes = 0;
+  let totalComments = 0;
+  let totalDislikes = 0;
 
-  //calculate total likes but likes is an array
+  //loop through the users posts to update the initial counters
 
-  const totalLikes = 0;
+  data?.user?.posts?.forEach((post) => {
+    totalViews += post.viewers.length;
+    totalLikes += post.likes.length;
+    totalDislikes += post.dislikes.length;
+    totalComments += post.comments.length;
+  });
 
-  //total posts
-
-  //calculate total comments
-
-  const totalComments = 0;
-
-  //calculate total dislikes
-
-  const totalDislikes = 0;
+  const { data: earnings } = useQuery({
+    queryKey: ["my-earnings"],
+    queryFn: getMyEarningsAPI,
+  });
 
   //total earnings
+  const totalEarnings = earnings?.reduce((acc, curr) => acc + curr.amount, 0);
 
-  const totalEarnings = 0;
   const stats = [
     {
       icon: <FaEye />,
@@ -92,17 +108,26 @@ const AccountSummaryDashboard = ({}) => {
     {
       icon: <FaFlag />,
       label: "Posts",
-      value: userPosts?.length || 0,
+      value: userPosts || 0,
       bgColor: "bg-pink-500",
     },
     {
-      icon: <FaUsers />,
-      label: "Ranking",
-      value: "1st",
+      icon: <FaCommentDots />,
+      label: "Comments",
+      value: totalComments,
       bgColor: "bg-teal-500",
     },
   ];
-
+  //! Sending email verification token mutation
+  const verificationTokenMutation = useMutation({
+    mutationKey: ["send-email-verification-token"],
+    mutationFn: sendEmailVerificatonTokenAPI,
+  });
+  //handleSendVerificationEmail
+  const handleSendVerificationEmail = async () => {
+    verificationTokenMutation.mutate();
+  };
+  console.log(verificationTokenMutation);
   return (
     <div className="p-4">
       <p
@@ -110,21 +135,26 @@ const AccountSummaryDashboard = ({}) => {
        font-bold text-2xl text-gray-800 mb-4
       "
       >
-        Welcome Back:Masynctech
+        Welcome Back: {data?.user?.username} -{" "}
+        <span className="text-gray-400">{data?.user?.accountType}</span>
       </p>
       {/* display account verification status */}
-      {/* {mutation.isPending ? (
-        <AlertMessage type="loading" message="Loading..." />
-      ) : mutation.isError ? (
+      {verificationTokenMutation.isPending ? (
+        <AlertMessage type="loading" message="Email sending loading..." />
+      ) : verificationTokenMutation.isError ? (
         <AlertMessage
           type="error"
           message={
-            mutation?.error?.message || mutation?.error?.response?.data?.message
+            verificationTokenMutation?.error?.message ||
+            verificationTokenMutation?.error?.response?.data?.message
           }
         />
-      ) : mutation.isSuccess ? (
-        <AlertMessage type="success" message={mutation?.data?.message} />
-      ) : null} */}
+      ) : verificationTokenMutation.isSuccess ? (
+        <AlertMessage
+          type="success"
+          message={verificationTokenMutation?.data?.message}
+        />
+      ) : null}
       {!hasPlan && (
         <div
           className="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 mb-4"
@@ -149,7 +179,7 @@ const AccountSummaryDashboard = ({}) => {
           <p>
             Your account is not verified. Please{" "}
             <button
-              // onClick={handleSendVerificationEmail}
+              onClick={handleSendVerificationEmail}
               className="underline text-red-800"
             >
               verify your account

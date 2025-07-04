@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-
+const crypto = require("crypto");
 const userSchema = new mongoose.Schema(
   {
     username: {
@@ -40,14 +40,6 @@ const userSchema = new mongoose.Schema(
       type: Date,
       default: null,
     },
-    accountVerificationToken: {
-      type: String,
-      default: null,
-    },
-    accountVerificationExpires: {
-      type: Date,
-      default: null,
-    },
     passwordResetExpires: {
       type: Date,
       default: null,
@@ -67,7 +59,7 @@ const userSchema = new mongoose.Schema(
       default: () =>
         new Date(new Date().getFullYear(), new Date().getMonth(), +1, 1),
     },
-    Plan: {
+    plan: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Plan",
     },
@@ -89,6 +81,14 @@ const userSchema = new mongoose.Schema(
       type: Date,
       default: Date.now(),
     },
+    accountType: {
+      type: String,
+      default: "Basic",
+    },
+    isBlocked: {
+      type: Boolean,
+      default: false
+    },
     followers: [
       {
         type: mongoose.Schema.Types.ObjectId,
@@ -107,5 +107,43 @@ const userSchema = new mongoose.Schema(
   }
 );
 
-const User = mongoose.model("User",userSchema);
+//! Generate token for account verification
+userSchema.methods.generateAccVerificationToken = function () {
+  const emailToken = crypto.randomBytes(20).toString("hex");
+  //assign the token to the user
+  this.accountVerificationToken = crypto
+    .createHash("sha256")
+    .update(emailToken)
+    .digest("hex");
+
+  this.accountVerificationExpires = Date.now() + 10 * 60 * 1000; //10 minutes
+  return emailToken;
+};
+
+//! Generate token for password reset
+userSchema.methods.generatePasswordResetToken = function () {
+  const emailToken = crypto.randomBytes(20).toString("hex");
+  //assign the token to the user
+  this.passwordResetToken = crypto
+    .createHash("sha256")
+    .update(emailToken)
+    .digest("hex");
+
+  this.passwordResetExpires = Date.now() + 10 * 60 * 1000; //10 minutes
+  return emailToken;
+};
+
+//! Method to update user accountType
+userSchema.method.updateAccountType = function () {
+  const postCount = this.posts.length;
+  if (postCount >= 50) {
+    this.accountType = "Premium";
+  } else if (postCount >= 10) {
+    this.accountType = "Standard";
+  } else {
+    this.accountType = "Basic";
+  }
+};
+
+const User = mongoose.model("User", userSchema);
 module.exports = User;

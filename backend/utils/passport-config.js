@@ -2,15 +2,16 @@ const passport = require("passport");
 const User = require("../models/User/User");
 const bcrypt = require("bcryptjs");
 const LocalStrategy = require("passport-local").Strategy;
-const JWTStrategy = require("passport-jwt").Strategy;
-const ExtractJWT = require("passport-jwt").ExtractJwt;
-const GoogleStrategy = require("passport-google-oauth20").Strategy;
+const JWTStrategy = require("passport-jwt").Strategy; //Strategy for jwt
+const ExtractJWT = require("passport-jwt").ExtractJwt; //Extract for jwt
+const GoogleStrategy = require("passport-google-oauth20");
 
-//! config local strategy
+//! Configure passport local strategy
+
 passport.use(
   new LocalStrategy(
     {
-      usernameField: "username", //* username or email
+      usernameField: "username", //username/email
     },
     async (username, password, done) => {
       try {
@@ -18,6 +19,7 @@ passport.use(
         if (!user) {
           return done(null, false, { message: "Invalid login details" });
         }
+        //verify the password
         const match = await bcrypt.compare(password, user.password);
         if (match) {
           return done(null, user);
@@ -31,8 +33,7 @@ passport.use(
   )
 );
 
-//! google
-//* JWT-options
+//JWT-Options
 const options = {
   jwtFromRequest: ExtractJWT.fromExtractors([
     (req) => {
@@ -45,7 +46,7 @@ const options = {
   ]),
   secretOrKey: process.env.JWT_SECRET,
 };
-//*JWT
+//JWT
 passport.use(
   new JWTStrategy(options, async (userDecoded, done) => {
     try {
@@ -60,7 +61,7 @@ passport.use(
     }
   })
 );
-//*Google 0Auth
+// GOOGLE OAUTH
 passport.use(
   new GoogleStrategy(
     {
@@ -70,17 +71,23 @@ passport.use(
     },
     async (accessToken, refreshtoken, profile, done) => {
       try {
-        let user = await User.findOne({ googleId: profile.id });
+        //check if user found
+        let user = await User.findOne({
+          googleId: profile.id,
+        });
+        //destructure properties from the profile
         const {
           id,
           displayName,
           name,
           _json: { picture },
         } = profile;
+        //check if email exists
         let email = "";
-        if (Array.isArray(profile?.emails) && profile?.emails?.lenfth > 0) {
+        if (Array.isArray(profile?.emails) && profile?.emails?.length > 0) {
           email = profile.emails[0].value;
         }
+        //check if user not found
         if (!user) {
           user = await User.create({
             username: displayName,
@@ -92,7 +99,7 @@ passport.use(
         }
         done(null, user);
       } catch (error) {
-        done(error, null);
+        done * error, null;
       }
     }
   )

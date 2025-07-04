@@ -33,12 +33,11 @@ const Login = () => {
         .mutateAsync(values)
         .then(() => {
           // redirect
-          navigate("/profile");
+          navigate("/dashboard");
         })
         .catch((err) => console.log(err));
     },
   });
-  console.log(userMutation);
   return (
     <div className="flex flex-wrap pb-24">
       <div className="w-full  p-4">
@@ -160,6 +159,10 @@ const Login = () => {
                 Sign in with Google
               </span>
             </a>
+            {/* forgot password link */}
+            <Link className="mt-10 text-indigo-500" to="/forgot-password">
+              Forgot Password?
+            </Link>
           </form>
         </div>
       </div>
