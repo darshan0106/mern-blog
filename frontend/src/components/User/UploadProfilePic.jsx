@@ -40,7 +40,6 @@ const UploadProfilePic = () => {
     },
   });
 
-  console.log(mutation);
   //!===== File upload logics====
   //! Handle fileChange
   const handleFileChange = (event) => {

@@ -49,7 +49,6 @@ const CheckoutForm = () => {
       setErrorMessage(error?.message);
     }
   };
-  console.log(paymentMutation);
   return (
     <div className="bg-gray-900 h-screen -mt-4 flex justify-center items-center">
       <form

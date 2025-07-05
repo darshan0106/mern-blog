@@ -25,7 +25,6 @@ const AddCategory = () => {
       categoryMutation.mutate(values);
     },
   });
-  console.log(categoryMutation);
   return (
     <div className="flex flex-wrap">
       <div className="w-full  p-4">

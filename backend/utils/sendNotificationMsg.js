@@ -22,10 +22,8 @@ const sendNotificatiomMsg = async (to, postId) => {
     };
     //send the email
     const info = await transporter.sendMail(message);
-    console.log("Email sent", info.messageId);
     return info;
   } catch (error) {
-    console.log(error);
     throw new Error("Email sending failed");
   }
 };

@@ -25,7 +25,6 @@ const CreatePost = () => {
     queryKey: ["post-details"],
     queryFn: () => fetchPost(postId),
   });
-  console.log(postDetails);
   // state for wysiwg
   const [description, setDescription] = useState("");
   //File upload state

@@ -27,7 +27,6 @@ const RequestResetPassword = () => {
     }),
     // submit
     onSubmit: (values) => {
-      console.log(values);
       userMutation
         .mutateAsync(values.email)
         .then(() => {
@@ -36,7 +35,6 @@ const RequestResetPassword = () => {
         .catch((err) => console.log(err));
     },
   });
-  console.log(userMutation);
   return (
     <div className="flex items-center justify-center h-screen bg-orange-100">
       <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-sm">

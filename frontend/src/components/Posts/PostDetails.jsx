@@ -144,7 +144,6 @@ const PostDetails = () => {
         .catch((e) => console.log(e));
     },
   });
-  console.log(commentMutation);
   return (
     <div className="container mx-auto p-4">
       <div className="bg-white rounded-lg shadow-lg p-5">

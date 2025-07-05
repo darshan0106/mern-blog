@@ -15,8 +15,6 @@ const Pricing = () => {
     (plan) => plan.planName === "Premium"
   );
 
-  console.log(premiumPlan);
-
   //Get the premium plan
   return (
     <section className="py-24">

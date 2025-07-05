@@ -23,11 +23,9 @@ const AccountSummaryDashboard = () => {
     queryFn: userProfileAPI,
   });
   //check if user has email
-
   const hasEmail = data?.user?.email;
-  console.log(data);
-  //check if user has plan
 
+  //check if user has plan
   const hasPlan = data?.user?.hasSelectedPlan;
 
   //check if user has verified account
@@ -40,7 +38,6 @@ const AccountSummaryDashboard = () => {
   const totalFollowing = data?.user?.following?.length;
 
   //get user posts
-
   const userPosts = data?.user?.posts?.length;
 
   //there is a view count in the post object so calculate the total views
@@ -127,7 +124,6 @@ const AccountSummaryDashboard = () => {
   const handleSendVerificationEmail = async () => {
     verificationTokenMutation.mutate();
   };
-  console.log(verificationTokenMutation);
   return (
     <div className="p-4">
       <p

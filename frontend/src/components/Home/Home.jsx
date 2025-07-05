@@ -31,8 +31,6 @@ const Home = () => {
         </div>
       </div>
 
-      {/* Featured Post */}
-      {/* <FeaturedPost post={featuredPost} /> */}
       {/* Features */}
       <Features />
       {/* Call to action */}

@@ -29,7 +29,6 @@ const Notifications = () => {
       })
       .catch((e) => console.log(e));
   };
-  console.log(mutation);
   return (
     <div className="flex justify-center items-start  h-screen bg-gray-100">
       <div className="max-w-md w-full mt-5 bg-white rounded-lg shadow-xl overflow-hidden">

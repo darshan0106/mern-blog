@@ -8,7 +8,6 @@ const MyEarnings = () => {
     queryKey: ["my-earnings"],
     queryFn: getMyEarningsAPI,
   });
-  console.log(data);
   return (
     <div>
       {data?.length <= 0 ? (

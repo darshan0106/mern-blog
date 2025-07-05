@@ -9,7 +9,6 @@ const Rankings = () => {
     queryKey: ["ranking"],
     queryFn: fetchAllEarningsAPI,
   });
-  console.log(data);
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-200 py-6 sm:py-12">
       <div className="w-full sm:max-w-xl mx-auto min-h-screen ">

@@ -12,10 +12,8 @@ const calculateEarnings = async () => {
   for (const post of posts) {
     //Count new unique viewers since the last calculation
     const newViewsCount = post.viewers.length - post.lastCalculatedViewsCount;
-    console.log(newViewsCount);
     //Calculate earnings based on the number of new unique views
     const earningsAmount = newViewsCount * RATE_PER_VIEW;
-    console.log(earningsAmount);
     //Update this month earnings and total earnings
     post.thisMonthEarnings += earningsAmount;
     post.totalEarnings += earningsAmount;
@@ -35,8 +33,6 @@ const calculateEarnings = async () => {
     //Save the record
     await post.save();
   }
-  //send the response (log)
-  console.log("Earnings calculated...", posts);
 };
 
 module.exports = calculateEarnings;

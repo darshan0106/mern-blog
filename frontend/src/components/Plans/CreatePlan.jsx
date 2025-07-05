@@ -30,7 +30,6 @@ const CreatePlan = () => {
     }),
     // submit
     onSubmit: async (values) => {
-      console.log(values);
       //prepare the data for creation
       const planData = {
         planName: values.planName,
@@ -48,7 +47,6 @@ const CreatePlan = () => {
     },
   });
 
-  console.log(planMutation);
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
       <form

@@ -90,7 +90,6 @@ const postController = {
     const postId = req.params.postId;
     //check for login user
     const userId = req.user ? req.user : null;
-    console.log(req.user);
     //find the post
     const postFound = await Post.findById(postId).populate({
       path: "comments",

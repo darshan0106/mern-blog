@@ -13,7 +13,6 @@ const PaymentSuccess = () => {
     queryKey: ["verify-payment"],
     queryFn: () => paymentVerificationAPI(paymentIntentId),
   });
-  console.log(data);
   return (
     <div className="flex items-center justify-center min-h-screen bg-orange-100">
       <div className="p-8 bg-white rounded-lg shadow-md max-w-md w-full">

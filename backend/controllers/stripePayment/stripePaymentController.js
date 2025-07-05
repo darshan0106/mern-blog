@@ -41,13 +41,12 @@ const stripePaymentController = {
     } catch (error) {
       res.json({ error });
     }
-  }), 
+  }),
   //verifying the payment
   verify: asyncHandler(async (req, res) => {
     //! Get the paymentId
     const { paymentId } = req.params;
     const paymentIntent = await stripe.paymentIntents.retrieve(paymentId);
-    console.log(paymentIntent);
     //! confirm the payment status
     if (paymentIntent.status !== "success") {
       //!get the data from the metadata

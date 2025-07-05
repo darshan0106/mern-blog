@@ -28,7 +28,6 @@ const Login = () => {
     }),
     // submit
     onSubmit: (values) => {
-      console.log(values);
       userMutation
         .mutateAsync(values)
         .then(() => {

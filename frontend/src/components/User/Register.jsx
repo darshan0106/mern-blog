@@ -32,7 +32,6 @@ const Register = () => {
     }),
     // submit
     onSubmit: (values) => {
-      console.log(values);
       userMutation
         .mutateAsync(values)
         .then(() => {
@@ -42,7 +41,6 @@ const Register = () => {
         .catch((err) => console.log(err));
     },
   });
-  console.log(userMutation);
   return (
     <div className="flex flex-wrap pb-24">
       <div className="w-full  p-4">
