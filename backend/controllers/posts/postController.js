@@ -33,7 +33,7 @@ const postController = {
     //* push the post into user
     userFound.posts.push(postCreated?._id);
     //* Update the user account type
-    userFound.updateAccountType();
+    await userFound.updateAccountType();
     await userFound.save();
 
     //* create notification
@@ -121,8 +121,8 @@ const postController = {
   //* ---Delete post---
   deletePost: asyncHandler(async (req, res) => {
     const postId = req.params.postId;
-    const categoryId = await Post.find(postId, "category");
-    await Category.updateOne({ _id: categoryId }, { $pull: { posts: postId } });
+    // const categoryId = await Post.find(postId, "category");
+    // await Category.updateOne({ _id: categoryId }, { $pull: { posts: postId } }); 
     await Post.findByIdAndDelete(postId);
     res.json({
       status: "success",

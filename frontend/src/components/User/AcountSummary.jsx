@@ -192,7 +192,7 @@ const AccountSummaryDashboard = () => {
           <p className="font-bold">Email Required</p>
           <p>
             Please{" "}
-            <Link to="/add-email" className="underline text-blue-800">
+            <Link to="/dashboard/add-email" className="underline text-blue-800">
               add an email
             </Link>{" "}
             to your account for important notifications.

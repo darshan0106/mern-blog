@@ -87,7 +87,7 @@ const userSchema = new mongoose.Schema(
     },
     isBlocked: {
       type: Boolean,
-      default: false
+      default: false,
     },
     followers: [
       {
@@ -134,7 +134,7 @@ userSchema.methods.generatePasswordResetToken = function () {
 };
 
 //! Method to update user accountType
-userSchema.method.updateAccountType = function () {
+userSchema.methods.updateAccountType = function () {
   const postCount = this.posts.length;
   if (postCount >= 50) {
     this.accountType = "Premium";
