@@ -42,10 +42,24 @@ const PORT = 5000;
 //Middlewares
 app.use(express.json()); //Pass json data
 //cors middleware
+const allowedOrigins = [
+  "https://mern-blog-git-main-darshan0106s-projects.vercel.app",
+  "https://mern-blog-3b6v8n59u-darshan0106s-projects.vercel.app",
+  "https://mern-blog-darshan0106s-projects.vercel.app", // Production domain
+  "http://localhost:3000", // Optional: for development
+];
+
 const corsOptions = {
-  origin: ["https://mern-blog-darshan0106s-projects.vercel.app/"],
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("CORS not allowed for this origin: " + origin));
+    }
+  },
   credentials: true,
 };
+
 app.use(cors(corsOptions));
 
 //! passport middleware
