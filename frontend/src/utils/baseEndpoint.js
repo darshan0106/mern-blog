@@ -1,1 +1,1 @@
-export const BASE_URL = "https://mern-blog-fxp7.onrender.com";
+export const BASE_URL = "https://mern-blog-fxp7.onrender.com/api/v1";
