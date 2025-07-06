@@ -43,7 +43,7 @@ const PORT = 5000;
 app.use(express.json()); //Pass json data
 //cors middleware
 const corsOptions = {
-  origin: ["http://localhost:5173"],
+  origin: ["https://mern-blog-livid-sigma.vercel.app"],
   credentials: true,
 };
 app.use(cors(corsOptions));
