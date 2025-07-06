@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = "http://localhost:5000/api/v1/categories";
+const BASE_URL = "https://mern-blog-fxp7.onrender.com/api/v1/categories";
 
 //! Create category api
 export const addCategoryAPI = async (postData) => {

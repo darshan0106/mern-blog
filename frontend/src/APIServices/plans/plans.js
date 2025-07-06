@@ -1,6 +1,6 @@
 import axios from "axios";
 //create that must return a promise
-const BASE_URL = "http://localhost:5000/api/v1/plans";
+const BASE_URL = "https://mern-blog-fxp7.onrender.com/api/v1/plans";
 
 //!Create post api
 export const createPlanAPI = async (planData) => {

@@ -73,7 +73,9 @@ const userController = {
       (err, user, info) => {
         if (err) return next(err);
         if (!user) {
-          return res.redirect("http://localhost:5173/google-login-error");
+          return res.redirect(
+            "https://mern-blog-livid-sigma.vercel.app/google-login-error"
+          );
         }
         //generate the token
 
