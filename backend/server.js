@@ -46,6 +46,7 @@ const allowedOrigins = [
   "https://mern-blog-git-main-darshan0106s-projects.vercel.app",
   "https://mern-blog-3b6v8n59u-darshan0106s-projects.vercel.app",
   "https://mern-blog-darshan0106s-projects.vercel.app", // Production domain
+  "https://mern-blog-livid-sigma.vercel.app",
   "http://localhost:3000", // Optional: for development
 ];
 
