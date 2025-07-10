@@ -45,8 +45,8 @@ const userController = {
       //set the token into cookie
       res.cookie("token", token, {
         httpOnly: true,
-        secure: false,
-        sameSite: "strict",
+        secure: true,
+        sameSite: "none",
         maxAge: 24 * 60 * 60 * 1000, //1 day
       });
 
@@ -90,7 +90,7 @@ const userController = {
           maxAge: 24 * 60 * 60 * 1000, //1 day:
         });
         //redirect the user dashboard
-        res.redirect("/dashboard");
+        res.redirect("https://mern-blog-livid-sigma.vercel.app/dashboard");
       }
     )(req, res, next);
   }),
